@@ -5,7 +5,12 @@ const nextConfig: NextConfig = {
     domains: [
       "images.unsplash.com",
       "via.placeholder.com",
-      "randomuser.me"
+      "randomuser.me",
+      "images.pexels.com",
+      "gratisography.com",
+      "st.depositphotos.com",
+      "static.vecteezy.com",
+      "img.freepik.com" // Added domain
     ],
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
