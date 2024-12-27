@@ -1,10 +1,10 @@
-import { FC } from "react";
+import { FC, ReactElement } from "react";
 import { FaCogs, FaShieldAlt, FaChartLine } from "react-icons/fa";
 
 // Define a type for the feature object
 interface Feature {
   id: number;
-  icon: JSX.Element; // Type for React elements (icons)
+  icon: ReactElement; // Type for React elements (icons)
   title: string;
   description: string;
 }
