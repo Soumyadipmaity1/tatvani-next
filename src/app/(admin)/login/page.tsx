@@ -4,17 +4,22 @@ import { useRouter } from 'next/navigation';
 
 const Login: React.FC = () => {
   // default email and password
-  const [email, setEmail] = useState<string>('admin@tatvani.com'); // Default email
-  const [password, setPassword] = useState<string>('tatvani'); // Default password
+  const [email, setEmail] = useState<string>(); // Default email
+  const [password, setPassword] = useState<string>(); // Default password
   const router = useRouter();
+
+
+
+
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    
-    // Directly navigate to the dashboard
-    if (email && password) {
-      router.push('/dashboard'); 
+
+    if (!email || !password || password.length < 6 || !email.includes("@gmail.com") || password.length > 15) {
+      alert("Please enter Valid Email and Password");
+      return;
     }
+
   };
 
   return (
