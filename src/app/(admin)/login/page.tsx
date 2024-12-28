@@ -61,7 +61,7 @@ const Login: React.FC = () => {
         <button
           disabled={loginMutatuion.isPending}
           type="submit" className="w-full bg-yellow-600 hover:bg-yellow-500 text-white font-semibold disabled:opacity-50 py-3 rounded transition">
-          Login
+          {loginMutatuion.isPending?"Loading...":"Login"}
         </button>
       </form>
     </div>
