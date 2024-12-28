@@ -6,7 +6,7 @@ import { users } from './users'
 
 const app = new Hono().basePath('/api')
 
-app.route('/users', users)
+app.route('/user', users)
 
 export const GET = handle(app)
 export const POST = handle(app)
