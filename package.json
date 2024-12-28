@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@prisma/client": "^6.1.0",
     "hono": "^4.6.14",
     "mongodb": "^6.12.0",
     "next": "15.1.3",
