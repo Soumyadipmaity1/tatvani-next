@@ -1,6 +1,28 @@
 "use client"
 
 import { useState, ChangeEvent, FormEvent } from "react";
+import { CldUploadButton } from 'next-cloudinary';
+import { v2 as cloudinary } from 'cloudinary';
+const CloudinaryUploader = () => {
+  const cloudPresetName = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME;
+  return (
+    <div>
+      <CldUploadButton
+      onPublicId={(result: any) => console.log(result)}
+        onSuccess={(result: any) => {
+          console.log(result)
+          const imageUrl = result?.secure_url; // Extracting the secure URL from the result
+          console.log("THE URL IS", imageUrl);
+          // Here you can also save the imageUrl to your database or state
+        }}
+        onUploadAdded={(result: any) => console.log(result)}
+        uploadPreset={cloudPresetName} >
+        <span>Upload Image</span>
+      </CldUploadButton>
+    </div>
+  );
+};
+
 
 interface Post {
   title: string;
@@ -15,7 +37,7 @@ const AddPost: React.FC = () => {
     title: "",
     author: "",
     content: "",
-    category: "", 
+    category: "",
     image: null
   });
 
@@ -43,7 +65,7 @@ const AddPost: React.FC = () => {
         <div>
           <label className="block mb-2">Title</label>
           <input
-           title="title"
+            title="title"
             type="text"
             name="title"
             value={post.title}
@@ -56,7 +78,7 @@ const AddPost: React.FC = () => {
         <div>
           <label className="block mb-2">Author</label>
           <input
-          title="author"
+            title="author"
             type="text"
             name="author"
             value={post.author}
@@ -69,7 +91,7 @@ const AddPost: React.FC = () => {
         <div>
           <label className="block mb-2">Content</label>
           <textarea
-          title="content"
+            title="content"
             name="content"
             value={post.content}
             onChange={handleChange}
@@ -81,7 +103,7 @@ const AddPost: React.FC = () => {
         <div>
           <label className="block mb-2">Category</label>
           <select
-          title="category"
+            title="category"
             name="category"
             value={post.category}
             onChange={handleChange}
@@ -92,8 +114,8 @@ const AddPost: React.FC = () => {
             <option value="Stories">Stories</option>
           </select>
         </div>
-
-        <div>
+        <CloudinaryUploader />
+        {/* <div>
           <label className="block mb-2">Related Image</label>
           <input
           title="image"
@@ -103,7 +125,7 @@ const AddPost: React.FC = () => {
             className="w-full p-2 bg-gray-700 border border-gray-600 rounded"
             required
           />
-        </div>
+        </div> */}
 
         <button type="submit" className="bg-blue-500 px-4 py-2 mt-4 rounded">
           Submit
