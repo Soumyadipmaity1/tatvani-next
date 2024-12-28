@@ -1,6 +1,7 @@
 "use client"
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
+import useLogin from '@/hooks/user/useLogin';
 
 const Login: React.FC = () => {
   // default email and password
@@ -9,7 +10,7 @@ const Login: React.FC = () => {
   const router = useRouter();
 
 
-
+  const loginMutatuion = useLogin();
 
 
   const handleSubmit = (e: FormEvent) => {
@@ -19,7 +20,10 @@ const Login: React.FC = () => {
       alert("Please enter Valid Email and Password");
       return;
     }
-
+    let data = {
+      email, password
+    }
+    loginMutatuion.mutate(data);
   };
 
   return (

@@ -12,6 +12,7 @@
     "@hono/zod-validator": "^0.4.2",
     "@prisma/client": "^6.1.0",
     "@tanstack/react-query": "^5.62.11",
+    "axios": "^1.7.9",
     "bcryptjs": "^2.4.3",
     "hono": "^4.6.14",
     "jsonwebtoken": "^9.0.2",
