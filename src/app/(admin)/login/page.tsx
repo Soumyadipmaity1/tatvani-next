@@ -24,8 +24,11 @@ const Login: React.FC = () => {
       email, password
     }
     loginMutatuion.mutate(data);
-  };
+    if (loginMutatuion.isSuccess) {
 
+      setTimeout(() => { router.push("/dashboard"), 500 })
+    }
+  }
   return (
     <div className="flex justify-center items-center h-screen bg-gray-900" suppressHydrationWarning={true}>
       <form onSubmit={handleSubmit} className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
@@ -33,26 +36,31 @@ const Login: React.FC = () => {
         <div className="mb-4">
           <label className="block text-gray-400">Email</label>
           <input
+            disabled={loginMutatuion.isPending}
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded focus:outline-none focus:border-yellow-500 transition"
+            className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded focus:outline-none focus:border-yellow-500 transition disabled:opacity-50"
             placeholder="Enter your email"
           />
         </div>
         <div className="mb-6">
           <label className="block text-gray-400">Password</label>
           <input
+            disabled={loginMutatuion.isPending}
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded focus:outline-none focus:border-yellow-500 transition"
+            className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded focus:outline-none focus:border-yellow-500 disabled:opacity-50 transition"
             placeholder="Enter your password"
           />
         </div>
-        <button type="submit" className="w-full bg-yellow-600 hover:bg-yellow-500 text-white font-semibold py-3 rounded transition">
+
+        <button
+          disabled={loginMutatuion.isPending}
+          type="submit" className="w-full bg-yellow-600 hover:bg-yellow-500 text-white font-semibold disabled:opacity-50 py-3 rounded transition">
           Login
         </button>
       </form>

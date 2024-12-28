@@ -33,8 +33,10 @@ export const users = new Hono()
     })), async (c) => {
         try {
             const { email, password } = c.req.valid("json");
+            // console.log(email, password )
             const findUser = await findByEmail(email);
-            if (!findUser) {
+            // console.log(findUser)
+            if (findUser===null) {
                 return c.json({ message: 'User not found' }, 404);
             } else {
                 const isMatch = await bcrypt.compare(password, findUser.password);
@@ -49,7 +51,7 @@ export const users = new Hono()
                     });
                     return c.json({ message: 'User signed in' }, 200);
                 } else {
-                    return c.json({ message: 'User not found' }, 404);
+                    return c.json({ message: 'Wrong Password' }, 404);
                 }
             }
         } catch (error) {
