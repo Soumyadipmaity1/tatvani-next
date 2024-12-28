@@ -1,14 +1,18 @@
 "use client"
 import { useState, FormEvent } from 'react';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import useLogin from '@/hooks/user/useLogin';
+import isAuthnticated from '@/hooks/user/isAuthnticated';
 
-const Login: React.FC = () => {
+const Login: React.FC = async () => {
   // default email and password
   const [email, setEmail] = useState<string>(); // Default email
   const [password, setPassword] = useState<string>(); // Default password
-  const router = useRouter();
 
+  // const auth = await isAuthnticated();
+  // if (!auth) {
+  //   redirect("/login");
+  // }
 
   const loginMutatuion = useLogin();
 
@@ -24,10 +28,7 @@ const Login: React.FC = () => {
       email, password
     }
     loginMutatuion.mutate(data);
-    if (loginMutatuion.isSuccess) {
 
-      setTimeout(() => { router.push("/dashboard"), 500 })
-    }
   }
   return (
     <div className="flex justify-center items-center h-screen bg-gray-900" suppressHydrationWarning={true}>
@@ -61,7 +62,7 @@ const Login: React.FC = () => {
         <button
           disabled={loginMutatuion.isPending}
           type="submit" className="w-full bg-yellow-600 hover:bg-yellow-500 text-white font-semibold disabled:opacity-50 py-3 rounded transition">
-          {loginMutatuion.isPending?"Loading...":"Login"}
+          {loginMutatuion.isPending ? "Loading..." : "Login"}
         </button>
       </form>
     </div>

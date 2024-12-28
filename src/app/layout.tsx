@@ -2,6 +2,7 @@
 // import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { useEffect, useState } from "react";
 import Footer from "@/components/Menubars/Footer";
 import Navbar from "@/components/Menubars/Navbar";
 import { usePathname } from "next/navigation";
@@ -27,6 +28,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [mutate, setMutate] = useState(false);
+  useEffect(() => {
+    setMutate(true)
+  })
   const pathname = usePathname();
   const noLayoutRoutes = ["/dashboard", "/add-post", "/review-posts"];
   const showLayout = pathname ? !noLayoutRoutes.includes(pathname) : false;
