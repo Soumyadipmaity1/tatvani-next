@@ -37,7 +37,7 @@ const AddPost: React.FC = () => {
     title: "",
     author: "",
     content: "",
-    category: "",
+    category: "Article",
     image: null
   });
 
@@ -54,7 +54,13 @@ const AddPost: React.FC = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(post);
+    const formData = new FormData();
+    formData.append("title", post.title);
+    formData.append("author", post.author);
+    formData.append("content", post.content);
+    formData.append("category", post.category);
+    formData.append("image", post.image as Blob);
+    console.log(formData);
     // submission logic 
   };
 
@@ -114,8 +120,8 @@ const AddPost: React.FC = () => {
             <option value="Stories">Stories</option>
           </select>
         </div>
-        <CloudinaryUploader />
-        {/* <div>
+  
+        <div>
           <label className="block mb-2">Related Image</label>
           <input
           title="image"
@@ -125,7 +131,7 @@ const AddPost: React.FC = () => {
             className="w-full p-2 bg-gray-700 border border-gray-600 rounded"
             required
           />
-        </div> */}
+        </div>
 
         <button type="submit" className="bg-blue-500 px-4 py-2 mt-4 rounded">
           Submit
