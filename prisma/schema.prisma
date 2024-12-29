@@ -62,4 +62,7 @@ model UserPost {
   college   String
   email     String
   mobileNo  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  approved  Boolean  @default(false)
 }
