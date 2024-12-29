@@ -55,7 +55,7 @@ export const post = new Hono()
                     if (res.success && res.result) {
                         const { secure_url, public_id } = res.result;
                         secure_url
-                        const newPost =await db.post.create({
+                        const newPost = await db.post.create({
                             data: {
                                 title: postTitle, category: postCategory, author: authorName, content: postContent, imageUrl: secure_url
                             }
@@ -71,6 +71,13 @@ export const post = new Hono()
             return c.json({ message: "Image uploaded", files: processedFiles }, 200);
         } catch (error) {
             console.log(error)
+            throw new HTTPException(500, { message: 'An error occurred' });
+        }
+    }).get('/get-posts', async (c) => {
+        try {
+            const posts = await db.post.findMany();
+            return c.json({ posts }, 200);
+        } catch (error) {
             throw new HTTPException(500, { message: 'An error occurred' });
         }
     });
