@@ -77,7 +77,7 @@ const Card: React.FC<CardProps> = ({ author, category, content, createdAt, id, i
                 <h2 className="mt-2 text-xl font-semibold text-gray-800 hover:text-gray-600 transition">
                     {title}
                 </h2>
-                <p className="mt-2 text-gray-600 text-sm">{content}</p>
+                <p className="mt-2 text-gray-600 text-wrap text-sm">{content}</p>
                 <div className="mt-4">
                     <span className="text-sm text-gray-500">Author:</span>
                     <span className="ml-2 text-gray-800 font-medium">{author}</span>
@@ -103,7 +103,9 @@ const Posts: React.FC = () => {
             <h2 className="text-3xl mb-5">Review User Submissions</h2>
             <div className="space-y-6 flex flex-wrap gap-2">
                 {
-                    posts.isError ? <p>Error fetching posts</p> : posts.isLoading ? <p>Loading...</p> : posts.data.posts?.map((post: Post, index: number) => <Card
+                    posts.isError ? <p>Error fetching posts</p> : posts.isLoading ? <p>Loading...</p> : posts.data.posts.length===0 ?<p>
+                        No posts to display
+                    </p> :posts.data.posts?.map((post: Post, index: number) => <Card
                         id={post.id}
                         title={post.title}
                         category={post.category}
