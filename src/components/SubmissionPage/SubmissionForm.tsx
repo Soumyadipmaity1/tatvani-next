@@ -46,6 +46,7 @@ const SubmissionForm: React.FC = () => {
       title,
       content
     }, {
+      
       onSuccess: () => {
         setFormData({
           firstName: '',
