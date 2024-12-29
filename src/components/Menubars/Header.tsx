@@ -7,7 +7,11 @@ const Header: FC = () => {
   const router = useRouter();
 
   const handleLogout = (): void => {
-    router.push('/login');
+    const confirmLogout = window.confirm("Are you sure you want to log out?");
+    if (confirmLogout) {
+      
+      router.push('/login'); 
+    }
   };
 
   return (
