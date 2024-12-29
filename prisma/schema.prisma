@@ -24,14 +24,15 @@ model User {
 }
 
 model Post {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  title     String
-  author    String
-  content   String
-  category  Category
-  imageUrl  String? // Optional field
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  author      String
+  content     String
+  category    Category
+  imageUrl    String // Optional field
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  imgPublicId String
 }
 
 enum Category {

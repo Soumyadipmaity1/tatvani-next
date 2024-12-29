@@ -6,7 +6,9 @@ import { Category } from "@prisma/client";
 import { Hono } from "hono";
 import { HTTPException } from 'hono/http-exception';
 import multer from 'multer';
-
+import { v4 as uuidv4 } from 'uuid';
+import cloudinary from 'cloudinary';
+import { deleteImage } from "@/utils/deleteImage";
 // Set up storage for multer
 const storage = multer.memoryStorage(); // or any other storage you want to use
 const upload = multer({ storage: storage });
@@ -49,7 +51,8 @@ export const post = new Hono()
                     const mimeType = file.type;
                     const encoding = "base64";
                     const base64Data = Buffer.from(buffer).toString("base64");
-                    const fileUri = "data:" + mimeType + ";" + encoding + "," + base64Data;
+                    const randomId = uuidv4();
+                    const fileUri = "data:" + randomId + mimeType + ";" + encoding + "," + base64Data;
                     // load into a buffer for later use
                     const res = await uploadToCloudinary(fileUri, file.name, "post-images");
                     if (res.success && res.result) {
@@ -57,7 +60,8 @@ export const post = new Hono()
                         secure_url
                         const newPost = await db.post.create({
                             data: {
-                                title: postTitle, category: postCategory, author: authorName, content: postContent, imageUrl: secure_url
+                                title: postTitle, category: postCategory, author: authorName, content: postContent, imageUrl: secure_url,
+                                imgPublicId: public_id
                             }
                         });
                         console.log(newPost)
@@ -92,6 +96,14 @@ export const post = new Hono()
         }
     }).get('/delete-post/:id', async (c) => {
         try {
+            const post = await db.post.findUnique({ where: { id: c.req.param("id") } });
+            if (!post) {
+                throw new HTTPException(404, { message: 'Post not found' });
+            }
+            const res = await deleteImage(post.imgPublicId);
+            if (res.error) {
+                throw new HTTPException(500, { message: 'An error occurred' });
+            }
             await db.post.delete({ where: { id: c.req.param("id") } });
             return c.json({ message: 'Post deleted' }, 200);
         } catch (error) {
