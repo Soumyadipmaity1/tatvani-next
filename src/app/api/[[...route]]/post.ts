@@ -2,14 +2,57 @@ import { addPostSchema } from "@/schema/post.schema";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { HTTPException } from 'hono/http-exception';
+import multer from 'multer';
 
+// Set up storage for multer
+const storage = multer.memoryStorage(); // or any other storage you want to use
+const upload = multer({ storage: storage });
 
-export const users = new Hono()
-    .post('/add-post', zValidator("json", addPostSchema), async (c) => {
+export const post = new Hono()
+    .post('/add-post', async (c) => {
         try {
-            const { title, author, content, category, image_url } = c.req.valid("json");
-            
+            const body = await c.req.parseBody();
+            const { title,
+                author,
+                content,
+                category } = body;
+            const files = body.image;
+
+            // check if files is an array and has length
+            if (!files || (Array.isArray(files) && files.length === 0)) {
+                return c.json({ message: "No files uploaded" }, 400);
+            }
+
+            // if files is not an array, convert it to an array
+            const fileArray = Array.isArray(files) ? files : [files];
+
+            const processedFiles = await Promise.all(
+                fileArray.map(async (file) => {
+                    if (!(file instanceof File)) {
+                        return c.json(
+                            {
+                                message: "Invalid file type",
+                                error: "Expected a file upload but received something else",
+                                received: typeof file,
+                            },
+                            400
+                        );
+                    }
+
+                    // load into a buffer for later use
+                    const buffer = Buffer.from(await file.arrayBuffer());
+                    console.log(buffer);
+                    console.log()
+                    return {
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
+                    };
+                })
+            );
+
+            return c.json({ message: "Image uploaded", files: processedFiles }, 200);
         } catch (error) {
-            throw new HTTPException(500, { message: 'An error occurred' })
+            throw new HTTPException(500, { message: 'An error occurred' });
         }
-    })
+    });

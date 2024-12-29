@@ -3,12 +3,13 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { CldUploadButton } from 'next-cloudinary';
 import { v2 as cloudinary } from 'cloudinary';
+import useAddPost from "@/hooks/post/useAddPost";
 const CloudinaryUploader = () => {
   const cloudPresetName = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME;
   return (
     <div>
       <CldUploadButton
-      onPublicId={(result: any) => console.log(result)}
+        onPublicId={(result: any) => console.log(result)}
         onSuccess={(result: any) => {
           console.log(result)
           const imageUrl = result?.secure_url; // Extracting the secure URL from the result
@@ -51,7 +52,7 @@ const AddPost: React.FC = () => {
       setPost({ ...post, image: e.target.files[0] });
     }
   };
-
+  const addPos = useAddPost();
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData();
@@ -61,6 +62,7 @@ const AddPost: React.FC = () => {
     formData.append("category", post.category);
     formData.append("image", post.image as Blob);
     console.log(formData);
+    addPos.mutate(formData);
     // submission logic 
   };
 
@@ -120,11 +122,11 @@ const AddPost: React.FC = () => {
             <option value="Stories">Stories</option>
           </select>
         </div>
-  
+
         <div>
           <label className="block mb-2">Related Image</label>
           <input
-          title="image"
+            title="image"
             type="file"
             accept="image/*"
             onChange={handleImageUpload}
