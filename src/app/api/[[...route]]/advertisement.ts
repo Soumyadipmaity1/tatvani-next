@@ -7,8 +7,6 @@ import { v4 as uuidv4 } from 'uuid';
 export const advertisement = new Hono()
     .post('/add-advertisement', async (c) => {
         try {
-
-
             const { shopName, address, googleLink, description, image } = await c.req.json();
 
             const files = image;
@@ -38,13 +36,14 @@ export const advertisement = new Hono()
                     const encoding = "base64";
                     const base64Data = Buffer.from(buffer).toString("base64");
                     const randomId = uuidv4();
-                    const fileUri = "data:" + randomId + mimeType + ";" + encoding + "," + base64Data;
+                    const fileUri = "data:" + randomId + mimeType + ";base64," + base64Data; // Corrected URI format
+
                     // load into a buffer for later use
                     const res = await uploadToCloudinary(fileUri, file.name, "advertisement-images");
                     if (res.success && res.result) {
                         const { secure_url, public_id } = res.result;
                         await db.advertisement.create({
-                            date: {
+                            data: {
                                 shopName,
                                 address,
                                 googleLink,
@@ -56,8 +55,11 @@ export const advertisement = new Hono()
                     } else {
                         return c.json({ message: "Image upload failed" }, 400);
                     }
+                })
+            ); // Closing the Promise.all
 
-                } catch (error) {
-                    throw new HTTPException(500, { message: "Internal Server Error" });
-                }
-        })
+            return c.json({ message: "Advertisements added successfully" }, 200); // Return success message
+        } catch (error) {
+            throw new HTTPException(500, { message: "Internal Server Error" });
+        }
+    });
