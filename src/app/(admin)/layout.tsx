@@ -2,6 +2,7 @@ import React from 'react'
 import { Geist, Geist_Mono } from 'next/font/google';
 import "../globals.css";
 import QueryProvider from '@/context/QueryProvider';
+import { Toaster } from 'react-hot-toast';
 
 
 
@@ -26,7 +27,7 @@ function AdminRootLayout({ children }: { children: React.ReactNode }) {
           {children}
         </QueryProvider>
 
-
+        <Toaster />
 
 
       </body>
