@@ -1,5 +1,9 @@
 "use client"
 
+import useAddUserPostDelete from "@/hooks/post/useAddUserPostDelete";
+import useApprovePost from "@/hooks/post/useApprovePost";
+import { useGetUserPosts } from "@/hooks/post/useGetUserPosts";
+import { UserPost } from "@prisma/client";
 import { useState, useEffect } from "react";
 
 interface Submission {
@@ -39,30 +43,49 @@ const submissions: Submission[] = [
 ];
 
 const ReviewPost: React.FC = () => {
-  const [posts, setPosts] = useState<Submission[]>([]);
 
-  useEffect(() => {
-    setPosts(submissions);
-  }, []);
 
+  const posts = useGetUserPosts();
+  const aproveMutation = useApprovePost()
+  const deleteMutation = useAddUserPostDelete()
+  const handleApprove = (id: string) => {
+    const res = window.confirm("Are you sure you want to approve this post?")
+    if (res) {
+      aproveMutation.mutate({ id })
+    }
+  }
+  const handleDelete = (id: string) => {
+    const res = window.confirm("Are you sure you want to delete this post?")
+    if (res) {
+      deleteMutation.mutate({ id })
+    }
+  }
   return (
     <div className="p-10 text-white">
       <h2 className="text-3xl mb-5">Review User Submissions</h2>
       <div className="space-y-6">
-        {posts.length === 0 ? (
-          <p>No submissions to review.</p>
-        ) : (
-          posts.map((post, index) => (
-            <div key={index} className="bg-gray-700 p-5 rounded shadow">
-              <h3 className="text-2xl mb-2">{post.category}</h3>
-              <p><strong>Author Name:</strong> {post.name}</p>
-              <p><strong>Email:</strong> {post.email}</p>
-              <p><strong>Phone Number:</strong> {post.phoneNumber}</p>
-              {post.collegeName && <p><strong>College Name:</strong> {post.collegeName}</p>}
-              <p><strong>Content:</strong> {post.content}</p>
-            </div>
-          ))
-        )}
+        {
+          posts.isError ? (<p>Error</p>) :
+            posts.isLoading ? (
+              <p>Loading...</p>) :
+              posts.data.length === 0 ? (
+                <p>No submissions to review.</p>
+              ) : (
+                posts.data.map((post: UserPost, index: number) => (
+                  <div key={index} className="bg-gray-700 p-5 rounded shadow">
+                    <h3 className="text-2xl mb-2">{post.category}</h3>
+                    <p><strong>Author Name:</strong> {post.firstName}</p>
+                    <p><strong>Email:</strong> {post.email}</p>
+                    <p><strong>Phone Number:</strong> {post.mobileNo}</p>
+                    {post.college && <p><strong>College Name:</strong> {post.college}</p>}
+                    <p><strong>Content:</strong> {post.content}</p>
+                    <div className="controlBox gap-2 flex">
+                      <button className="bg-green-500 p-2 rounded text-white" onClick={() => handleApprove(post.id)} >Approve</button>
+                      <button className="bg-red-500 p-2 rounded text-white" onClick={() => handleDelete(post.id)}>Delete</button>
+                    </div>
+                  </div>
+                ))
+              )}
       </div>
     </div>
   );

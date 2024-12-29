@@ -34,6 +34,7 @@ export const userPost = new Hono()
     }).get('/get-posts', async (c) => {
         try {
             const posts = await db.userPost.findMany();
+            console.log("===============>",posts)
             return c.json(posts, 200);
         } catch (error) {
             throw new HTTPException(500, { message: "Internal Server Error" });
@@ -65,7 +66,7 @@ export const userPost = new Hono()
         } catch (error) {
             throw new HTTPException(500, { message: "Internal Server Error" });
         }
-    }).delete("/delete-post/:id", async (c) => {
+    }).get("/delete-post/:id", async (c) => {
         try {
             const id = c.req.param("id");
             await db.userPost.delete({
