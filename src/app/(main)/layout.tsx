@@ -7,6 +7,7 @@ import Footer from "@/components/Menubars/Footer";
 import Navbar from "@/components/Menubars/Navbar";
 import { usePathname } from "next/navigation";
 import toast, { Toaster } from 'react-hot-toast'
+import QueryProvider from "@/context/QueryProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,13 +42,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased `} suppressHydrationWarning
       >
+        <QueryProvider>
 
 
           {showLayout && <Navbar />}
           {children}
           {showLayout && <Footer />}
           <Toaster />
-    
+        </QueryProvider>
+
       </body>
     </html>
   );
