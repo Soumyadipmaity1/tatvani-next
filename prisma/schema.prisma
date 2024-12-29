@@ -47,6 +47,7 @@ model Advertisement {
   address     String
   googleLink  String
   description String
+  imgPublicId String
   imageUrl    String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
