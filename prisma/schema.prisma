@@ -28,7 +28,6 @@ model Post {
   title     String
   author    String
   content   String
-  approved  Boolean  @default(false)
   category  Category
   imageUrl  String? // Optional field
   createdAt DateTime @default(now())
