@@ -5,7 +5,7 @@ type UploadResponse =
     { success: true; result?: any } |
     { success: false; error: any };
 
-const uploadToCloudinary = (
+export const uploadToCloudinary = (
     fileUri: string, fileName: string,folderName:string): Promise<UploadResponse> => {
     return new Promise((resolve, reject) => {
         cloudinary.uploader

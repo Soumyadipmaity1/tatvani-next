@@ -1,4 +1,6 @@
+import { db } from "@/lib/db";
 import { addPostSchema } from "@/schema/post.schema";
+import { uploadToCloudinary } from "@/utils/uploadCloudnary";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { HTTPException } from 'hono/http-exception';
@@ -39,20 +41,30 @@ export const post = new Hono()
                         );
                     }
 
+                    const buffer = await file.arrayBuffer();
+                    const mimeType = file.type;
+                    const encoding = "base64";
+                    const base64Data = Buffer.from(buffer).toString("base64");
+                    const fileUri = "data:" + mimeType + ";" + encoding + "," + base64Data;
                     // load into a buffer for later use
-                    const buffer = Buffer.from(await file.arrayBuffer());
-                    console.log(buffer);
-                    console.log()
-                    return {
-                        name: file.name,
-                        size: file.size,
-                        type: file.type,
-                    };
+                    const res = await uploadToCloudinary(fileUri, file.name, "post-images");
+                    if (res.success && res.result) {
+                        const { secure_url, public_id } = res.result;
+                        console.log(secure_url, public_id);
+                        // const newPost = db.post.create({
+                        //     data: {
+                        //         title, category, author, content, image: secure_url
+                        //     }
+                        // })
+                    } else {
+
+                    }
                 })
             );
 
             return c.json({ message: "Image uploaded", files: processedFiles }, 200);
         } catch (error) {
+            console.log(error)
             throw new HTTPException(500, { message: 'An error occurred' });
         }
     });
