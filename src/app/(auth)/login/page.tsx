@@ -1,10 +1,9 @@
 "use client"
 import { useState, FormEvent } from 'react';
-import { redirect, useRouter } from 'next/navigation';
 import useLogin from '@/hooks/user/useLogin';
 import isAuthnticated from '@/hooks/user/isAuthnticated';
 
-const Login: React.FC = async () => {
+const Login: React.FC =  () => {
   // default email and password
   const [email, setEmail] = useState<string>(); // Default email
   const [password, setPassword] = useState<string>(); // Default password

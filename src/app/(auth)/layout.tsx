@@ -17,9 +17,9 @@ const geistMono = Geist_Mono({
 });
 function AuthRootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" >
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased `} suppressHydrationWarning
+        className={`${geistSans.variable} ${geistMono.variable} antialiased `} 
       >
 
         <QueryProvider>{children} </QueryProvider>
