@@ -73,7 +73,7 @@ const Card: React.FC<CardProps> = ({ author, category, content, createdAt, id, i
                     <span className="ml-2 text-gray-800 font-medium">{author}</span>
                 </div>
             </div>
-            <div className="control flex justify-between p-4">
+            <div className="control flex justify-between p-4 border-t border-gray-500">
                 <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Edit</button>
                 <button className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Delete</button>
             </div>

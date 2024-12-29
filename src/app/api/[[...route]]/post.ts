@@ -80,4 +80,37 @@ export const post = new Hono()
         } catch (error) {
             throw new HTTPException(500, { message: 'An error occurred' });
         }
+    }).get('/get-post/:id', async (c) => {
+        try {
+            const post = await db.post.findUnique({ where: { id: c.req.param("id") } });
+            if (!post) {
+                throw new HTTPException(404, { message: 'Post not found' });
+            }
+            return c.json({ post }, 200);
+        } catch (error) {
+            throw new HTTPException(500, { message: 'An error occurred' });
+        }
+    }).get('/delete-post/:id', async (c) => {
+        try {
+            await db.post.delete({ where: { id: c.req.param("id") } });
+            return c.json({ message: 'Post deleted' }, 200);
+        } catch (error) {
+            throw new HTTPException(500, { message: 'An error occurred' });
+        }
+    }).post('/update-post/:id', async (c) => {
+        try {
+            const body = await c.req.parseBody();
+            const { title, author, content, category } = body;
+            const postContent = content.toString();
+            const authorName = author.toString();
+            const postTitle = title.toString();
+            const postCategory = category.toString() as Category;
+            const post = await db.post.update({
+                where: { id: c.req.param("id") },
+                data: { title: postTitle, category: postCategory, author: authorName, content: postContent }
+            });
+            return c.json({ message: 'Post updated', post }, 200);
+        } catch (error) {
+            throw new HTTPException(500, { message: 'An error occurred' });
+        }
     });
