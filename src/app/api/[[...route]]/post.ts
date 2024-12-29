@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { addPostSchema } from "@/schema/post.schema";
 import { uploadToCloudinary } from "@/utils/uploadCloudnary";
 import { zValidator } from "@hono/zod-validator";
+import { Category } from "@prisma/client";
 import { Hono } from "hono";
 import { HTTPException } from 'hono/http-exception';
 import multer from 'multer';
@@ -19,7 +20,10 @@ export const post = new Hono()
                 content,
                 category } = body;
             const files = body.image;
-
+            const postContent = content.toString();
+            const authorName = author.toString();
+            const postTitle = title.toString();
+            const postCategory = category.toString() as Category;
             // check if files is an array and has length
             if (!files || (Array.isArray(files) && files.length === 0)) {
                 return c.json({ message: "No files uploaded" }, 400);
@@ -50,14 +54,16 @@ export const post = new Hono()
                     const res = await uploadToCloudinary(fileUri, file.name, "post-images");
                     if (res.success && res.result) {
                         const { secure_url, public_id } = res.result;
-                        console.log(secure_url, public_id);
-                        // const newPost = db.post.create({
-                        //     data: {
-                        //         title, category, author, content, image: secure_url
-                        //     }
-                        // })
+                        secure_url
+                        const newPost =await db.post.create({
+                            data: {
+                                title: postTitle, category: postCategory, author: authorName, content: postContent, imageUrl: secure_url
+                            }
+                        });
+                        console.log(newPost)
+                        return c.json({ message: "Post created", post: newPost }, 201);
                     } else {
-
+                        throw new HTTPException(401, { message: 'File upload failed' });
                     }
                 })
             );
