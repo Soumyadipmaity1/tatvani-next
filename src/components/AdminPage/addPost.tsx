@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useRef } from "react";
 import { CldUploadButton } from 'next-cloudinary';
 import { v2 as cloudinary } from 'cloudinary';
 import useAddPost from "@/hooks/post/useAddPost";
@@ -52,6 +52,7 @@ const AddPost: React.FC = () => {
       setPost({ ...post, image: e.target.files[0] });
     }
   };
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const addPos = useAddPost();
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -61,9 +62,16 @@ const AddPost: React.FC = () => {
     formData.append("content", post.content);
     formData.append("category", post.category);
     formData.append("image", post.image as Blob);
-    console.log(formData);
-    addPos.mutate(formData);
-    // submission logic 
+    addPos.mutate(formData, {
+      onSuccess: () => {
+        setPost({ title: "", author: "", content: "", category: "Article", image: null });
+        // Clear the file input field
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
+      }
+    });
+
   };
 
   return (
@@ -73,6 +81,7 @@ const AddPost: React.FC = () => {
         <div>
           <label className="block mb-2">Title</label>
           <input
+            disabled={addPos.isPending}
             title="title"
             type="text"
             name="title"
@@ -86,6 +95,8 @@ const AddPost: React.FC = () => {
         <div>
           <label className="block mb-2">Author</label>
           <input
+            disabled={addPos.isPending}
+
             title="author"
             type="text"
             name="author"
@@ -99,6 +110,8 @@ const AddPost: React.FC = () => {
         <div>
           <label className="block mb-2">Content</label>
           <textarea
+            disabled={addPos.isPending}
+
             title="content"
             name="content"
             value={post.content}
@@ -111,6 +124,8 @@ const AddPost: React.FC = () => {
         <div>
           <label className="block mb-2">Category</label>
           <select
+            disabled={addPos.isPending}
+
             title="category"
             name="category"
             value={post.category}
@@ -126,6 +141,8 @@ const AddPost: React.FC = () => {
         <div>
           <label className="block mb-2">Related Image</label>
           <input
+            disabled={addPos.isPending}
+            ref={fileInputRef}
             title="image"
             type="file"
             accept="image/*"
@@ -136,7 +153,9 @@ const AddPost: React.FC = () => {
         </div>
 
         <button type="submit" className="bg-blue-500 px-4 py-2 mt-4 rounded">
-          Submit
+          {
+            addPos.isPending ? "Adding Post..." : "Add Post"
+          }
         </button>
       </form>
     </div>
