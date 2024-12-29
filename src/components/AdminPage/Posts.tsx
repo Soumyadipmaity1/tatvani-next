@@ -53,7 +53,7 @@ type CardProps = {
 
 const Card: React.FC<CardProps> = ({ author, category, content, createdAt, id, imageUrl, title, updatedAt }) => {
     return (
-        <div className="max-w-sm rounded-lg shadow-lg bg-white border border-gray-200">
+        <div className="max-w-sm rounded-lg shadow-lg bg-white border border-gray-200 w-5/12">
             <img
                 src={imageUrl}
                 alt="Card Image"
@@ -73,6 +73,10 @@ const Card: React.FC<CardProps> = ({ author, category, content, createdAt, id, i
                     <span className="ml-2 text-gray-800 font-medium">{author}</span>
                 </div>
             </div>
+            <div className="control flex justify-between p-4">
+                <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Edit</button>
+                <button className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Delete</button>
+            </div>
         </div>
     );
 };
@@ -87,7 +91,7 @@ const Posts: React.FC = () => {
     return (
         <div className="p-10 text-white">
             <h2 className="text-3xl mb-5">Review User Submissions</h2>
-            <div className="space-y-6">
+            <div className="space-y-6 flex flex-wrap gap-2">
                 {
                     posts.isError ? <p>Error fetching posts</p> : posts.isLoading ? <p>Loading...</p> : posts.data.posts?.map((post: Post, index: number) => <Card
                         title={post.title}
