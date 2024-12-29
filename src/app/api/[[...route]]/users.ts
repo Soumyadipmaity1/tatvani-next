@@ -9,23 +9,27 @@ import { deleteCookie, setCookie } from "hono/cookie";
 import { createToken } from "@/utils/jwtToken";
 export const users = new Hono()
     .post("/add-user", zValidator("json", signInUp), async (c) => {
-        const { fullName, email, password } = c.req.valid("json");
+        try {
+            const { fullName, email, password } = c.req.valid("json");
 
-        //is email already in use?
-        const user = await findByEmail(email);
-        if (user) {
-            throw new HTTPException(409, { message: 'Email already exits' })
-        } else {
-            const hashPassword = await bcrypt.hash(password, 10);
-            //create user
-            const newUser = await db.user.create({
-                data: {
-                    fullName,
-                    email,
-                    password: hashPassword
-                }
-            });
-            return c.json({ message: "User created successfully" }, 201);
+            //is email already in use?
+            const user = await findByEmail(email);
+            if (user) {
+                throw new HTTPException(409, { message: 'Email already exits' })
+            } else {
+                const hashPassword = await bcrypt.hash(password, 10);
+                //create user
+                const newUser = await db.user.create({
+                    data: {
+                        fullName,
+                        email,
+                        password: hashPassword
+                    }
+                });
+                return c.json({ message: "User created successfully" }, 201);
+            }
+        } catch (error) {
+            throw new HTTPException(500, { message: 'An error occurred' })
         }
     }).post("/sign-in", zValidator("json", signInUp.pick({
         email: true,
@@ -36,8 +40,8 @@ export const users = new Hono()
             // console.log(email, password )
             const findUser = await findByEmail(email);
             // console.log(findUser)
-            if (findUser===null) {
-                return c.json({ message: 'User not found' }, 404);
+            if (findUser === null) {
+                throw new HTTPException(404, { message: 'User not found' })
             } else {
                 const isMatch = await bcrypt.compare(password, findUser.password);
                 const token = createToken(findUser.id);
@@ -51,11 +55,12 @@ export const users = new Hono()
                     });
                     return c.json({ message: 'User signed in' }, 200);
                 } else {
-                    return c.json({ message: 'Wrong Password' }, 404);
+                    throw new HTTPException(401, { message: 'Invalid credentials' })
                 }
             }
         } catch (error) {
-            return c.json({ message: 'An error occurred' }, 500);
+            throw new HTTPException(500, { message: 'An error occurred' })
+
         }
     })
     .get("/logout", async (c) => {
@@ -63,6 +68,7 @@ export const users = new Hono()
             deleteCookie(c, "token");
             return c.json({ message: 'User signed out' }, 200);
         } catch (error) {
-            return c.json({ message: 'An error occurred' }, 500);
+            throw new HTTPException(500, { message: 'An error occurred' })
+
         }
     })
