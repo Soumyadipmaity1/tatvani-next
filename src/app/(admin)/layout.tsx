@@ -1,6 +1,7 @@
 import React from 'react'
 import { Geist, Geist_Mono } from 'next/font/google';
 import "../globals.css";
+import QueryProvider from '@/context/QueryProvider';
 
 
 
@@ -20,9 +21,11 @@ function AdminRootLayout({ children }: { children: React.ReactNode }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased `} suppressHydrationWarning
       >
 
+        <QueryProvider>
 
+          {children}
+        </QueryProvider>
 
-        {children}
 
 
 
