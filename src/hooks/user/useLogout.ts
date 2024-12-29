@@ -4,10 +4,10 @@ import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-export default function useLogin() {
+export default function useLogOut() {
     const router = useRouter();
     const mutation = useMutation({
-        mutationFn: async (data: any) => {
+        mutationFn: async () => {
             const res = await axios.get("/api/user/logout");
             return res;
         },

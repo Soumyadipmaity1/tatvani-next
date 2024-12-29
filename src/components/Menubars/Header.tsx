@@ -1,16 +1,18 @@
 "use client";
 
+import useLogOut from '@/hooks/user/useLogout';
 import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 
 const Header: FC = () => {
-  const router = useRouter();
+  // const router = useRouter();
+  const logout = useLogOut();
 
   const handleLogout = (): void => {
     const confirmLogout = window.confirm("Are you sure you want to log out?");
     if (confirmLogout) {
-      
-      router.push('/login'); 
+      logout.mutate();
+      // router.push('/login'); 
     }
   };
 
