@@ -1,7 +1,7 @@
 "use client";
 // import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import { useEffect, useState } from "react";
 import Footer from "@/components/Menubars/Footer";
 import Navbar from "@/components/Menubars/Navbar";
