@@ -16,7 +16,8 @@ export default function useAddPost() {
             return res;
         },
         onSuccess: () => {
-            toast.success("Login successful");
+          
+            toast.success("Post added successfully");
             
         },
         onError: (err: any) => {
