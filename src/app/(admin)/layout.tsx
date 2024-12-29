@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import "../globals.css";
 import QueryProvider from '@/context/QueryProvider';
 import { Toaster } from 'react-hot-toast';
+import isAuthnticated from '@/hooks/user/isAuthnticated';
+import { redirect } from 'next/navigation';
 
 
 
@@ -15,7 +17,13 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-function AdminRootLayout({ children }: { children: React.ReactNode }) {
+async function AdminRootLayout({ children }: { children: React.ReactNode }) {
+  const auth = await isAuthnticated();
+
+  if (!auth) {
+    redirect("/login");
+  }
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
