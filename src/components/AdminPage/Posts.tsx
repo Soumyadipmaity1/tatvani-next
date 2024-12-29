@@ -1,5 +1,6 @@
 "use client"
 
+import useDeletePost from "@/hooks/post/useDeletePost";
 import { useGetPosts } from "@/hooks/post/useGetPosts";
 import { Post } from "@prisma/client";
 import { useState, useEffect } from "react";
@@ -45,13 +46,22 @@ type CardProps = {
     category: string;
     content: string;
     createdAt: Date;
-    id?: string;
+    id: string;
     imageUrl: string;
     title: string;
     updatedAt: Date;
 };
 
 const Card: React.FC<CardProps> = ({ author, category, content, createdAt, id, imageUrl, title, updatedAt }) => {
+
+    const delmutation = useDeletePost();
+    const handlePostDelete = async (id: string) => {
+        const res = window.confirm("Are you sure you want to delete this post?");
+        if (res) {
+            delmutation.mutate({ id: id });
+        }
+    }
+
     return (
         <div className="max-w-sm rounded-lg shadow-lg bg-white border border-gray-200 w-5/12">
             <img
@@ -74,8 +84,8 @@ const Card: React.FC<CardProps> = ({ author, category, content, createdAt, id, i
                 </div>
             </div>
             <div className="control flex justify-between p-4 border-t border-gray-500">
-                <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Edit</button>
-                <button className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Delete</button>
+                {/* <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Edit</button> */}
+                <button onClick={() => handlePostDelete(id)} className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Delete</button>
             </div>
         </div>
     );
@@ -94,6 +104,7 @@ const Posts: React.FC = () => {
             <div className="space-y-6 flex flex-wrap gap-2">
                 {
                     posts.isError ? <p>Error fetching posts</p> : posts.isLoading ? <p>Loading...</p> : posts.data.posts?.map((post: Post, index: number) => <Card
+                        id={post.id}
                         title={post.title}
                         category={post.category}
                         content={post.content}
