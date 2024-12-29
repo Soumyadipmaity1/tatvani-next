@@ -1,6 +1,6 @@
 "use client";
 
-import useUserPost from '@/hooks/post/useUserPost';
+import useUserPost from '@/hooks/post/useAddUserPost';
 import { Category } from '@prisma/client';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { FiSend } from 'react-icons/fi';
