@@ -1,7 +1,7 @@
 "use client"
 import { useState, FormEvent } from 'react';
 import useLogin from '@/hooks/user/useLogin';
-import isAuthnticated from '@/hooks/user/isAuthnticated';
+// import isAuthnticated from '@/hooks/user/isAuthnticated';
 
 const Login: React.FC =  () => {
   // default email and password
