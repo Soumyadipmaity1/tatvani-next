@@ -4,26 +4,30 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-export default function useAddPost() {
-    const router = useRouter();
+export default function useAdvertisemen() {
     const client = useQueryClient();
     const mutation = useMutation({
         mutationFn: async (formdata: any) => {
+
+
             // console.log(formdata.get("image"))
-            const res = await fetch("/api/post/add-post", {
+            const res = await fetch("/api/advertise/add-advertisement", {
                 method: "POST",
                 body: formdata,
             })
-            console.log(res);
+
             return res;
+
+
         },
         onSuccess: () => {
-            client.invalidateQueries({ queryKey: ['posts'] });
-            toast.success("Post added successfully");
+            client.invalidateQueries({ queryKey: ['advertisement'] });
+            toast.success("Advertisement added successfully");
 
         },
         onError: (err: any) => {
-            toast.error(err.response.data.message || "Login failed");
+            console.log(err)
+            toast.error(err.response.data.message || "Advertisement added failed");
         }
     });
     return mutation;

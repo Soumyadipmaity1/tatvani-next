@@ -7,9 +7,14 @@ import { v4 as uuidv4 } from 'uuid';
 export const advertisement = new Hono()
     .post('/add-advertisement', async (c) => {
         try {
-            const { shopName, address, googleLink, description, image } = await c.req.json();
-
+            const { shopName, address, googleMapLink, description, image } = await c.req.parseBody();
+console.log(shopName, address, googleMapLink, description, image)
             const files = image;
+            const showNameStr = shopName.toString();
+            const addressStr = address.toString();
+            const googleLinkStr = googleMapLink.toString();
+            const descriptionStr = description.toString();
+
             // check if files is an array and has length
             if (!files || (Array.isArray(files) && files.length === 0)) {
                 return c.json({ message: "No files uploaded" }, 400);
@@ -42,24 +47,27 @@ export const advertisement = new Hono()
                     const res = await uploadToCloudinary(fileUri, file.name, "advertisement-images");
                     if (res.success && res.result) {
                         const { secure_url, public_id } = res.result;
+                        console.log(secure_url, public_id)
                         await db.advertisement.create({
                             data: {
-                                shopName,
-                                address,
-                                googleLink,
-                                description,
+                                shopName: showNameStr,
+                                address: addressStr,
+                                googleLink: googleLinkStr,
+                                description: descriptionStr,
                                 imageUrl: secure_url,
-                                imgPublicId: public_id
+                                imgPublicId: public_id,
                             }
                         });
+                        return c.json({ message: "Image uploaded successfully" }, 201);
                     } else {
                         return c.json({ message: "Image upload failed" }, 400);
                     }
                 })
             ); // Closing the Promise.all
 
-            return c.json({ message: "Advertisements added successfully" }, 200); // Return success message
+           
         } catch (error) {
+            console.log(error)
             throw new HTTPException(500, { message: "Internal Server Error" });
         }
     });

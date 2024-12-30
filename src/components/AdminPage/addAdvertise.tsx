@@ -1,109 +1,112 @@
 "use client"
+import useAddAdvertisement from '@/hooks/advertisement/useAddAdvertisement';
+import React, { useState, FormEvent } from 'react';
 
-import { useState, ChangeEvent, FormEvent } from "react";
+type CardProps = {
+  author: string;
+  category: string;
+  content: string;
+  createdAt: string;
+  id: string;
+  imageUrl: string;
+  title: string;
+  updatedAt: string;
+};
 
-interface Advertise {
-  shopName: string;
-  address: string;
-  googleMapLink: string;
-  description: string;
-  image: File | null;
-}
+const categories = [
+  { label: "Article", value: "Article" },
+  { label: "Poetry", value: "Poetry" },
+  { label: "Stories", value: "Stories" },
+];
 
-const AddAdvertise: React.FC = () => {
-  const [advertise, setAdvertise] = useState<Advertise>({
-    shopName: "",
-    address: "",
-    googleMapLink: "",
-    description: "",
-    image: null
+const AddAdvertisment: React.FC<CardProps> = ({ author, category, content, createdAt, id, imageUrl, title, updatedAt }) => {
+  const [advertise, setAdvertise] = useState({
+    shopName: '',
+    address: '',
+    googleMapLink: '',
+    description: '',
+    image: null as File | null,
   });
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setAdvertise({ ...advertise, [name]: value });
-  };
-
-  const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setAdvertise({ ...advertise, image: e.target.files[0] });
-    }
-  };
-
+  const advertiseMutation = useAddAdvertisement();
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(advertise);
-    // submission logic 
+    console.log(advertise)
+    const formData = new FormData();
+    formData.append('shopName', advertise.shopName);
+    formData.append('address', advertise.address);
+    formData.append('googleMapLink', advertise.googleMapLink);
+    formData.append('description', advertise.description);
+    if (advertise.image) formData.append('image', advertise.image);
+
+    // console.log('Submitting form with data:', advertise);
+    // // Call your mutation or API function here
+    // // Example:
+    advertiseMutation.mutate(formData,
+      //    {
+      //   onSuccess: () => setAdvertise({ shopName: '', address: '', googleMapLink: '', description: '', image: null }),
+      // }
+    );
+
+    // setAdvertise({ shopName: '', address: '', googleMapLink: '', description: '', image: null });
   };
 
   return (
-    <div className="p-10 text-white">
-      <h2 className="text-3xl mb-5">Add New Advertisement</h2>
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label className="block mb-2">Shop Name</label>
-          <input
-            type="text"
-            name="shopName"
-            value={advertise.shopName}
-            onChange={handleChange}
-            className="w-full p-2 bg-gray-700 border border-gray-600 rounded"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block mb-2">Address</label>
-          <input
-            type="text"
-            name="address"
-            value={advertise.address}
-            onChange={handleChange}
-            className="w-full p-2 bg-gray-700 border border-gray-600 rounded"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block mb-2">Google Map Location Link</label>
-          <input
-            type="url"
-            name="googleMapLink"
-            value={advertise.googleMapLink}
-            onChange={handleChange}
-            className="w-full p-2 bg-gray-700 border border-gray-600 rounded"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block mb-2">Description</label>
-          <textarea
-            name="description"
-            value={advertise.description}
-            onChange={handleChange}
-            className="w-full p-2 bg-gray-700 border border-gray-600 rounded h-32"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block mb-2">Shop Image</label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-            className="w-full p-2 bg-gray-700 border border-gray-600 rounded"
-            required
-          />
-        </div>
-
-        <button type="submit" className="bg-blue-500 px-4 py-2 mt-4 rounded">
+    <form onSubmit={handleSubmit} className="max-w-sm rounded-lg shadow-lg bg-white border border-gray-200 w-5/12 p-4">
+      <img
+        src={imageUrl}
+        alt="Card Image"
+        className="w-full h-48 object-cover rounded-t-lg"
+      />
+      <div className="mt-4">
+        <label className="block text-sm text-gray-500 mb-2">Shop Name</label>
+        <input
+          type="text"
+          value={advertise.shopName}
+          onChange={(e) => setAdvertise({ ...advertise, shopName: e.target.value })}
+          className="w-full border rounded p-2"
+        />
+      </div>
+      <div className="mt-4">
+        <label className="block text-sm text-gray-500 mb-2">Address</label>
+        <input
+          type="text"
+          value={advertise.address}
+          onChange={(e) => setAdvertise({ ...advertise, address: e.target.value })}
+          className="w-full border rounded p-2"
+        />
+      </div>
+      <div className="mt-4">
+        <label className="block text-sm text-gray-500 mb-2">Google Map Link</label>
+        <input
+          type="text"
+          value={advertise.googleMapLink}
+          onChange={(e) => setAdvertise({ ...advertise, googleMapLink: e.target.value })}
+          className="w-full border rounded p-2"
+        />
+      </div>
+      <div className="mt-4">
+        <label className="block text-sm text-gray-500 mb-2">Description</label>
+        <textarea
+          value={advertise.description}
+          onChange={(e) => setAdvertise({ ...advertise, description: e.target.value })}
+          className="w-full border rounded p-2"
+        />
+      </div>
+      <div className="mt-4">
+        <label className="block text-sm text-gray-500 mb-2">Image</label>
+        <input
+          type="file"
+          onChange={(e) => setAdvertise({ ...advertise, image: e.target.files?.[0] || null })}
+          className="w-full border rounded p-2"
+        />
+      </div>
+      <div className="mt-4 flex justify-end">
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
           Submit
         </button>
-      </form>
-    </div>
+      </div>
+    </form>
   );
 };
 
-export default AddAdvertise;
+export default AddAdvertisment;
