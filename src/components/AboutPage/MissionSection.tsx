@@ -25,10 +25,10 @@ const MissionSection: React.FC = () => {
   }
 
   return (
-    <section className="bg-blue-900 dark:bg-gray-800 text-yellow-50 dark:text-yellow-400 rounded-3xl p-10 shadow-2xl transition-all duration-300">
+    <section className="bg-darkBlue dark:bg-gray-800 text-pitch dark:text-pitch rounded-3xl p-10 shadow-2xl transition-all duration-300">
       <div className="flex items-center space-x-6 mb-8">
-        <div className="bg-yellow-400 dark:bg-yellow-500 p-4 rounded-full shadow-inner">
-          <FaRocket className="text-blue-900 dark:text-gray-800 text-5xl" />
+        <div className="bg-pitch dark:bg-pitch p-4 rounded-full shadow-inner">
+          <FaRocket className="text-darkBlue dark:text-gray-800 text-5xl" />
         </div>
         <h2 className="text-3xl font-bold">Our Mission</h2>
       </div>
@@ -38,7 +38,7 @@ const MissionSection: React.FC = () => {
       <div className="grid grid-cols-2 gap-6">
         {missionItems.map(({ icon: Icon, text }, index) => (
           <div key={index} className="flex items-center">
-            <Icon className="text-yellow-400 dark:text-yellow-500 text-2xl mr-3" />
+            <Icon className="text-pitch dark:text-pitch text-2xl mr-3" />
             <span>{text}</span>
           </div>
         ))}
