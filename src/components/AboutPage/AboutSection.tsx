@@ -25,7 +25,7 @@ const AboutUsSection: React.FC = () => {
             </div>
 
             <div className="absolute inset-0 flex justify-center items-center z-10">
-              <div className="bg-yellow-400 dark:bg-yellow-500 text-blue-900 dark:text-gray-800 p-4 rounded-full shadow-lg">
+              <div className="bg-pitch text-darkBlue dark:text-gray-800 p-4 rounded-full shadow-lg">
                 <FaPlus size={30} />
               </div>
             </div>
@@ -49,11 +49,11 @@ const AboutUsSection: React.FC = () => {
           </div>
 
           <div>
-            <h2 className="text-yellow-400 dark:text-yellow-500 font-bold uppercase mb-4">About Us</h2>
-            <h1 className="text-4xl font-extrabold text-blue-900 dark:text-yellow-400 mb-6">
+            <h2 className="text-pitch font-bold uppercase mb-4">About Us</h2>
+            <h1 className="text-4xl font-extrabold text-darkBlue dark:text-pitch mb-6">
               Empowering Your Digital Tomorrow
             </h1>
-            <p className="text-blue-800 dark:text-gray-300 mb-8 leading-relaxed">
+            <p className="text-darkBlue dark:text-gray-300 mb-8 leading-relaxed">
               It is a long established fact that a reader will be distracted by
               the readable content of a page when looking at its layout. Lorem
               Ipsum is simply dummy text of the printing and typesetting
@@ -64,8 +64,8 @@ const AboutUsSection: React.FC = () => {
             </p>
 
             <div className="flex justify-center">
-              <div className="flex items-center text-blue-900 dark:text-yellow-500 hover:text-blue-900 dark:hover:text-gray-800 justify-center border-2 border-yellow-400 dark:border-yellow-500 rounded-lg py-4 px-8 cursor-pointer hover:bg-yellow-400 dark:hover:bg-yellow-500 transition-all duration-300">
-                <span className="font-bold text-xl ">
+              <div className="flex items-center text-darkBlue dark:text-pitch hover:text-darkBlue dark:hover:text-gray-800 justify-center border-2 border-pitch rounded-lg py-4 px-8 cursor-pointer hover:bg-pitch transition-all duration-300">
+                <span className="font-bold text-xl">
                   About Mynimalistic
                 </span>
               </div>
