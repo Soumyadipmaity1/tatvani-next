@@ -98,7 +98,7 @@ const Navbar: React.FC = () => {
                   className={
                     pathname === item.path
                       ? activeClassName
-                      : "hover:bg-pitch hover:text-darkBlue px-2.5 pb-1 pt-[1px] rounded-2xl font-semibold text-darkBlue dark:text-darkBlue dark:hover:bg-darkBlue"
+                      : "hover:bg-pitch hover:text-darkBlue px-2.5 pb-1 pt-[1px] rounded-2xl font-semibold text-darkBlue dark:text-white dark:hover:bg-darkBlue"
                   }
                 >
                   {item.name}
