@@ -197,7 +197,7 @@ const SubmissionForm: React.FC = () => {
         <button
           disabled={userPost.isPending}
           type="submit"
-          className="flex items-center space-x-2 px-6 py-3 rounded-lg font-semibold bg-blue-500 text-white hover:bg-blue-600 transition-all ease-in-out duration-200 focus:ring focus:ring-blue-300"
+          className="flex items-center space-x-2 px-6 py-3 rounded-lg font-semibold bg-pitch text-black hover:text-white hover:bg-darkBlue transition-all ease-in-out duration-200 focus:ring focus:ring-blue-300"
         >
           {userPost.isPending ? <FiUpload className="animate-spin" /> : <FiSend />}
           <span>{userPost.isPending ? 'Submitting...' : 'Submit'}</span>
