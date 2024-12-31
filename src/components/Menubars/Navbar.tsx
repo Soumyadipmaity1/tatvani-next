@@ -98,7 +98,7 @@ const Navbar: React.FC = () => {
                   className={
                     pathname === item.path
                       ? activeClassName
-                      : "hover:bg-pitch hover:text-darkBlue px-2.5 pb-1 pt-[1px] rounded-2xl font-semibold text-darkBlue dark:text-white dark:hover:bg-darkBlue"
+                      : "hover:bg-pitch hover:text-darkBlue px-2.5 pb-1 pt-[1px] rounded-2xl font-semibold text-darkBlue dark:text-pitch dark:hover:bg-darkBlue"
                   }
                 >
                   {item.name}
@@ -137,7 +137,7 @@ const Navbar: React.FC = () => {
                     onClick={toggleMobileMenu}
                     className={
                       pathname === item.path
-                        ? `text-darkBlue dark:text-pitch text-lg font-semibold ${activeClassName}`
+                        ? `text-darkBlue dark:text-darkBlue text-lg font-semibold ${activeClassName}`
                         : "hover:bg-pitch hover:text-darkBlue text-darkBlue dark:text-pitch dark:hover:bg-darkBlue"
                     }
                   >
