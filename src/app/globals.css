@@ -19,3 +19,70 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #1c7636;
+    border: 1px solid #1c7636;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #1f2937;
+  }
+
+
+  /* Featured card CSS */.feature-card {
+  background-color: #fec784; /* pitch color */
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 8px 20px rgba(47, 41, 106, 0.1); /* darkBlue with opacity */
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s ease;
+  z-index: 0;
+}
+
+.feature-card .icon {
+  position: relative;
+  z-index: 1;
+  color: #2f296a; /* darkBlue */
+}
+
+.feature-card h3, 
+.feature-card p {
+  position: relative;
+  z-index: 1;
+  color: #2f296a; /* darkBlue */
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background-color: #2f296a; /* darkBlue */
+  z-index: 0;
+  transition: all 0.6s ease;
+  transform: skewX(-30deg);
+}
+
+.feature-card:hover::before {
+  left: 0;
+}
+
+.feature-card:hover {
+  transform: scale(1.05);
+}
+
+.feature-card:hover h3, 
+.feature-card:hover p {
+  color: #fec784; /* pitch color */
+}
+
+
