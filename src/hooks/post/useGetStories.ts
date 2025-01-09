@@ -9,7 +9,7 @@ export const useGetStories = () => {
         queryFn:async () =>
         {
             const res = await axios.get("/api/post/get-stories");
-            return res.data.poem;
+            return res.data.Stories;
         }
     })
     return posts;
