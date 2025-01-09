@@ -8,7 +8,6 @@ export const advertisement = new Hono()
     .post('/add-advertisement', async (c) => {
         try {
             const { shopName, address, googleMapLink, description, image } = await c.req.parseBody();
-console.log(shopName, address, googleMapLink, description, image)
             const files = image;
             const showNameStr = shopName.toString();
             const addressStr = address.toString();
@@ -65,9 +64,16 @@ console.log(shopName, address, googleMapLink, description, image)
                 })
             ); // Closing the Promise.all
 
-           
+
         } catch (error) {
             console.log(error)
             throw new HTTPException(500, { message: "Internal Server Error" });
         }
-    });
+    }).get("/get-advertisement", async (c) => {
+        try {
+            const advertisements = await db.advertisement.findMany();
+            return c.json({ advertisements }, 200);
+        } catch (error) {
+            throw new HTTPException(500, { message: "Internal Server Error" });
+        }
+    })
