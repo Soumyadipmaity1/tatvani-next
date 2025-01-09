@@ -41,7 +41,6 @@ const Navbar: React.FC = () => {
   const menuItems: MenuItem[] = [
     { name: "Home", path: "/" },
     { name: "About Us", path: "/about" },
-
     { name: "Article", path: "/article" },
     { name: "Poetry", path: "/poetry" },
     { name: "Stories", path: "/stories" },
@@ -50,12 +49,12 @@ const Navbar: React.FC = () => {
   ];
 
   const activeClassName =
-    "bg-[#1c7636] px-2.5 lg:pb-1 text-white lg:pt-[1px] py-2 lg:py-0 font-semibold rounded-lg lg:rounded-2xl";
+    "bg-pitch px-2.5 lg:pb-1 text-darkBlue lg:pt-[1px] py-2 lg:py-0 font-semibold rounded-lg lg:rounded-2xl";
 
   const pathname = usePathname();
 
   return (
-    <nav className="bg-white dark:bg-gray-900 shadow-lg sticky top-0 z-50 lg:px-10 xl:px-6 2xl:px-32" suppressHydrationWarning={true}>
+    <nav className="bg-white dark:bg-[#111827] shadow-lg sticky top-0 z-50 lg:px-10 xl:px-6 2xl:px-32" suppressHydrationWarning={true}>
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center pr-14">
@@ -64,37 +63,34 @@ const Navbar: React.FC = () => {
               alt="logo"
               className="sm:w-10 w-8 mr-2 rounded-full"
             />
-            <span className="sm:text-3xl text-2xl font-bold text-[#1c7636] dark:text-white lg:pb-2 pb-1 pt-0.5">
+            <span className="sm:text-3xl text-2xl font-bold text-darkBlue dark:text-pitch lg:pb-2 pb-1 pt-0.5">
               Tatvani
             </span>
           </div>
 
-          {/* Search bar for mobile */}
           <div className="lg:hidden w-3/5 sm:pl-6 mr-2">
             <input
               type="text"
               placeholder="Search..."
-              className="border border-gray-500 dark:border-gray-400 w-full rounded-2xl px-2 py-1 dark:bg-gray-800 dark:text-white"
+              className="border border-darkBlue dark:border-pitch w-full rounded-2xl px-2 py-1 dark:bg-darkBlue dark:text-pitch text-darkBlue"
             />
           </div>
 
-          {/* Mobile bar */}
           <div className="lg:hidden z-50 flex items-center">
             <button
               onClick={toggleDarkMode}
-              className="mr-4 text-xl rounded-full border border-gray-500 dark:border-gray-400 p-1.5"
+              className="mr-4 text-xl rounded-full border border-darkBlue dark:border-pitch p-1.5"
             >
-              {darkMode ? <FaSun className="text-yellow-400" /> : <FaMoon />}
+              {darkMode ? <FaSun className="text-pitch" /> : <FaMoon className="text-darkBlue" />}
             </button>
             <button
               onClick={toggleMobileMenu}
-              className="focus:outline-none dark:text-white text-2xl"
+              className="focus:outline-none dark:text-pitch text-darkBlue text-2xl"
             >
               {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
             </button>
           </div>
 
-          {/* Desktop Menu */}
           <div className="hidden lg:flex space-x-2 items-center">
             {menuItems.map((item) => (
               <Link key={item.path} href={item.path} legacyBehavior>
@@ -102,7 +98,7 @@ const Navbar: React.FC = () => {
                   className={
                     pathname === item.path
                       ? activeClassName
-                      : "hover:bg-[#1c7636] hover:text-white px-2.5 pb-1 pt-[1px] rounded-2xl font-semibold dark:text-white dark:hover:bg-gray-700"
+                      : "hover:bg-pitch hover:text-darkBlue px-2.5 pb-1 pt-[1px] rounded-2xl font-semibold text-darkBlue dark:text-pitch dark:hover:bg-darkBlue"
                   }
                 >
                   {item.name}
@@ -111,17 +107,15 @@ const Navbar: React.FC = () => {
             ))}
           </div>
 
-          {/* Dark Mode Toggle for Desktop */}
           <button
             onClick={toggleDarkMode}
-            className="text-xl hidden lg:block ml-2 rounded-full border border-gray-500 dark:border-gray-400 p-2"
+            className="text-xl hidden lg:block ml-2 rounded-full border border-darkBlue dark:border-pitch p-2"
           >
-            {darkMode ? <FaSun className="text-yellow-400" /> : <FaMoon />}
+            {darkMode ? <FaSun className="text-pitch" /> : <FaMoon className="text-darkBlue" />}
           </button>
 
-          {/* Mobile Menu */}
           <div
-            className={`lg:hidden fixed top-0 left-0 w-full h-screen bg-white dark:bg-gray-900 text-black dark:text-white text-lg font-semibold py-1 text-center transition-transform duration-300 ease-in-out z-40 ${
+            className={`lg:hidden fixed top-0 left-0 w-full h-screen bg-white dark:bg-[#111827] text-darkBlue dark:text-pitch text-lg font-semibold py-1 text-center transition-transform duration-300 ease-in-out z-40 ${
               isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
             }`}
           >
@@ -132,7 +126,7 @@ const Navbar: React.FC = () => {
                   alt="logo"
                   className=" mb-5 mt-4 rounded-full w-16"
                 />
-                <span className="text-4xl font-bold text-[#1c7636] dark:text-white">
+                <span className="text-4xl font-bold text-darkBlue dark:text-pitch">
                   Tatvani
                 </span>
               </div>
@@ -143,8 +137,8 @@ const Navbar: React.FC = () => {
                     onClick={toggleMobileMenu}
                     className={
                       pathname === item.path
-                        ? `text-black dark:text-white text-lg font-semibold ${activeClassName}`
-                        : "hover:bg-[#1c7636] hover:text-white text-black dark:text-white dark:hover:bg-gray-700"
+                        ? `text-darkBlue dark:text-darkBlue text-lg font-semibold ${activeClassName}`
+                        : "hover:bg-pitch hover:text-darkBlue text-darkBlue dark:text-pitch dark:hover:bg-darkBlue"
                     }
                   >
                     {item.name}
@@ -154,12 +148,11 @@ const Navbar: React.FC = () => {
             </div>
           </div>
 
-          {/* Search Bar for Desktop */}
           <div className="hidden lg:block w-[300px]">
             <input
               type="text"
               placeholder="Search..."
-              className="border border-gray-500 dark:border-gray-400 w-full rounded-2xl px-2 py-1 dark:bg-gray-800 dark:text-white"
+              className="border border-darkBlue dark:border-pitch w-full rounded-2xl px-2 py-1 dark:bg-darkBlue dark:text-pitch text-darkBlue"
             />
           </div>
         </div>

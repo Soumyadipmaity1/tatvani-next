@@ -40,12 +40,12 @@ const features: Feature[] = [
 
 const FeaturesSection: FC = () => {
   return (
-    <section className="bg-[#fef8c7] py-20 px-4 2xl:px-20 sm:px-20 xl:px-10">
+    <section className=" bg-darkGreen py-20 px-4 2xl:px-20 sm:px-20 xl:px-10">
       <div className="mx-auto text-center">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-[#3d3b3a] mb-8">
+        <h2 className="text-4xl md:text-5xl font-extrabold text-white dark:text-pitch mb-8">
           Key Features
         </h2>
-        <p className="text-lg md:text-xl text-[#3D4A4F] mb-12">
+        <p className="text-lg md:text-xl text-white/80 dark:text-pitch/80 mb-12">
           Discover the powerful tools and features we offer to make your experience unforgettable.
         </p>
 
@@ -53,15 +53,30 @@ const FeaturesSection: FC = () => {
           {features.map((feature) => (
             <div
               key={feature.id}
-              className="feature-card bg-white shadow-lg rounded-lg p-6 transition-transform duration-300 hover:scale-105 hover:shadow-lg border border-black"
+              className="group relative overflow-hidden bg-pitch dark:bg-darkBlue 
+                rounded-lg p-6 transform transition-all duration-300 hover:scale-105
+                shadow-lg hover:shadow-xl cursor-pointer z-0"
             >
-              <div className="icon mb-6 text-center text-5xl text-[#3d3b3a]">
+              {/* Hover overlay */}
+              <div className="absolute inset-0 bg-darkBlue dark:bg-pitch -translate-x-full 
+                group-hover:translate-x-0 transition-transform duration-500 ease-out 
+                skew-x-12 -z-10"
+              />
+              
+              <div className="icon mb-6 text-center text-5xl text-darkBlue dark:text-pitch
+                group-hover:text-pitch dark:group-hover:text-darkBlue transition-colors duration-300">
                 {feature.icon}
               </div>
-              <h3 className="text-2xl font-bold text-[#3d3b3a] mb-4">
+              
+              <h3 className="text-2xl font-bold text-darkBlue dark:text-pitch mb-4
+                group-hover:text-pitch dark:group-hover:text-darkBlue transition-colors duration-300">
                 {feature.title}
               </h3>
-              <p className="text-md text-[#3d3b3a]">{feature.description}</p>
+              
+              <p className="text-md text-darkBlue/80 dark:text-pitch/80
+                group-hover:text-pitch dark:group-hover:text-darkBlue transition-colors duration-300">
+                {feature.description}
+              </p>
             </div>
           ))}
         </div>
