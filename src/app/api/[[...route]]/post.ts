@@ -130,7 +130,7 @@ export const post = new Hono()
             const poem = await db.post.findMany({
                 where: { category: "Poetry" },
                 orderBy: { createdAt: "desc" },
-                take:4
+                take: 4
             });
             return c.json({ poem }, 200);
         } catch (error) {
@@ -143,9 +143,23 @@ export const post = new Hono()
             const Stories = await db.post.findMany({
                 where: { category: "Stories" },
                 orderBy: { createdAt: "desc" },
-                take:4
+                take: 4
             });
             return c.json({ Stories }, 200);
+        } catch (error) {
+            throw new HTTPException(500, {
+                message: "Internal server error occurred"
+            });
+        }
+    })
+    .get("/get-airtcle", async (c) => {
+        try {
+            const Article = await db.post.findMany({
+                where: { category: "Article" },
+                orderBy: { createdAt: "desc" },
+                take: 4
+            });
+            return c.json({ Article }, 200);
         } catch (error) {
             throw new HTTPException(500, {
                 message: "Internal server error occurred"

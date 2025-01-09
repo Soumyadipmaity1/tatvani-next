@@ -1,3 +1,5 @@
+"use client"
+import { useGetAirtcle } from "@/hooks/post/useGetAirtcel";
 import Image from "next/image";
 
 interface ArticleItem {
@@ -30,6 +32,9 @@ const Article: ArticleItem[] = [
 ];
 
 const LatestArticle: React.FC = () => {
+
+  const airtcle = useGetAirtcle();
+
   return (
     <div className="2xl:px-20 sm:px-20 xl:px-10 px-4 py-20 bg-white dark:bg-[#111827]">
       <div className="text-center mb-12">
@@ -43,7 +48,7 @@ const LatestArticle: React.FC = () => {
 
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {Article.map((item, index) => (
+          {airtcle.data && airtcle.data.map((item: any, index: number) => (
             <div
               key={index}
               className="bg-white dark:bg-darkBlue border border-pitch rounded-lg shadow-md overflow-hidden group relative transition-transform duration-300 transform hover:scale-105"
@@ -62,11 +67,19 @@ const LatestArticle: React.FC = () => {
                 <h3 className="text-2xl font-bold hover:underline text-darkBlue dark:text-pitch mb-2">
                   {item.title}
                 </h3>
-                <p className="text-sm text-darkBlue dark:text-pitch">{item.date}</p>
+                <p className="text-sm text-darkBlue dark:text-pitch">
+                  {
+                    new Date(item.createdAt).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })
+                  }
+                </p>
               </div>
 
               <div className="absolute top-0 left-0 mt-4 ml-4 bg-pitch text-darkBlue dark:bg-darkBlue dark:text-pitch px-3 py-1 text-xs rounded-full transition-colors duration-300">
-                {item.date}
+                {item.author}
               </div>
             </div>
           ))}
