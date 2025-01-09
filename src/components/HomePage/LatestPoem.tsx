@@ -44,8 +44,8 @@ const poems: PoemItem[] = [
 
 const FeaturedPoems: React.FC = () => {
 
-  const poemsDATA = useGetPoem();
-  console.log(poemsDATA.data);
+  const { data, isLoading, isError } = useGetPoem();
+  console.log();
 
   return (
     <div className="sm:px-20 xl:px-10 2xl:px-20 px-4 py-20 bg-white dark:bg-[#111827] transition-colors duration-300">
@@ -58,7 +58,7 @@ const FeaturedPoems: React.FC = () => {
 
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {poems.map((poem, index) => (
+          {data && data.map((poem: any, index: number) => (
             <div
               key={index}
               className="relative rounded-xl shadow-lg overflow-hidden group transition-all duration-300 transform hover:scale-105 hover:shadow-xl bg-white dark:bg-darkBlue border border-pitch dark:border-[#111827]"
@@ -84,9 +84,16 @@ const FeaturedPoems: React.FC = () => {
                   {poem.title}
                 </h3>
                 <p className="text-lg mt-2 transition-colors duration-300">
-                  By: <span className="font-medium">{poem.poet}</span>
+                  By: <span className="font-medium">{poem.author}</span>
                 </p>
-                <p className="text-sm mt-1 opacity-80 transition-colors duration-300">{poem.date}</p>
+                <p className="text-sm mt-1 opacity-80 transition-colors duration-300">
+                  {
+                    new Date(poem.createdAt).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })
+                  }</p>
 
                 <div className="mt-5">
                   <button className="bg-pitch hover:bg-darkBlue font-semibold py-2 px-5 rounded-full transition-all duration-300 text-darkBlue hover:text-pitch border-2 border-pitch hover:border-pitch dark:bg-darkBlue dark:text-pitch dark:hover:bg-pitch dark:hover:text-darkBlue">

@@ -8,7 +8,7 @@ export const useGetPoem = () => {
         queryKey: ['posts'],
         queryFn:async () =>
         {
-            const res = await axios.post("/api/post/get-poem");
+            const res = await axios.get("/api/post/get-poem");
             return res.data.poem;
         }
     })

@@ -129,7 +129,8 @@ export const post = new Hono()
         try {
             const poem = await db.post.findMany({
                 where: { category: "Poetry" },
-                orderBy: { createdAt: "desc" }
+                orderBy: { createdAt: "desc" },
+                take:4
             });
             return c.json({ poem }, 200);
         } catch (error) {
@@ -141,7 +142,8 @@ export const post = new Hono()
         try {
             const Stories = await db.post.findMany({
                 where: { category: "Stories" },
-                orderBy: { createdAt: "desc" }
+                orderBy: { createdAt: "desc" },
+                take:4
             });
             return c.json({ Stories }, 200);
         } catch (error) {
