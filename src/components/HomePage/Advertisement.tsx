@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from 'next/image';
+import useGetAdvertisemen from "@/hooks/advertisement/useGetAdvertisement";
 
 interface Shop {
   name: string;
@@ -17,7 +18,8 @@ const AdvertisementSection: React.FC<{ shops: Shop[] }> = ({ shops }) => {
   useEffect(() => {
     setIsClient(true);
   }, []);
-
+  const advertisement = useGetAdvertisemen();
+  console.log(advertisement.data)
   return (
     <div>
       {shops.map(shop => (

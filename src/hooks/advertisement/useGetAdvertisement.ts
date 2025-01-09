@@ -9,7 +9,9 @@ export default function useGetAdvertisemen() {
         queryKey: ["advertisement"],
         queryFn: async () => {
             const res = await axios.get("/api/advertise/get-advertisement");
-            return res.data;
+            console.log(res)
+            return res.data.advertisements;
         }
     })
+    return client;
 }
