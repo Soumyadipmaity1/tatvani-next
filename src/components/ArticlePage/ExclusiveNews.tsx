@@ -15,7 +15,7 @@ interface NewsItem {
 }
 
 const NewsCard: React.FC<NewsItem> = ({ title, content, category, createdAt, imageUrl, id }) => (
-  <Link href={`/read/?id=${id}`}>
+  <Link href={`/read?id=${id}`}>
     <div className="flex flex-col md:flex-row items-center md:items-start gap-4 p-4 bg-white dark:bg-[#1f2937] shadow-md rounded-lg transition duration-300 hover:shadow-lg cursor-pointer group">
       <Image src={imageUrl} alt={title} width={128} height={128} className="w-full md:w-32 h-32 rounded-lg object-cover" />
       <div>
