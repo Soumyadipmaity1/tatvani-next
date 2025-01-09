@@ -1,3 +1,6 @@
+"use client"
+
+import { useGetPoem } from "@/hooks/post/useGetPoet";
 import Image from "next/image";
 
 // Define an interface for the poem data
@@ -41,6 +44,10 @@ const poems: PoemItem[] = [
 ];
 
 const FeaturedPoems: React.FC = () => {
+
+  const poemsDATA = useGetPoem();
+  console.log(poemsDATA.data);
+
   return (
     <div className="sm:px-20 xl:px-10 2xl:px-20 px-4 bg-white py-20">
       <div className="text-center mb-12">

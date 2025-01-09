@@ -75,6 +75,7 @@ export const advertisement = new Hono()
     }).get("/get-advertisement", async (c) => {
         try {
             const advertisements = await db.advertisement.findMany();
+            console.log(advertisements)
             return c.json({ advertisements }, 200);
         } catch (error) {
             throw new HTTPException(500, { message: "Internal Server Error" });
