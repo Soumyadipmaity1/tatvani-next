@@ -125,4 +125,16 @@ export const post = new Hono()
         } catch (error) {
             throw new HTTPException(500, { message: 'An error occurred' });
         }
-    });
+    }).get("/get-poet", async (c) => {
+        try {
+            const poets = await db.post.findMany({
+                where: { category: "Poetry" },
+                orderBy: { createdAt: "desc" }
+            });
+            return c.json({ poets }, 200);
+        } catch (error) {
+            throw new HTTPException(500, {
+                message: "Internal server error occurred"
+            });
+        }
+    })
