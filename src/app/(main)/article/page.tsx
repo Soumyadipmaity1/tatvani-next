@@ -5,8 +5,8 @@ import React from 'react'
 function ArticlePage() {
   return (
     <div suppressHydrationWarning={true}>
-        <ArticleSlider/>
-      <ExclusiveNews/>
+      <ArticleSlider />
+      <ExclusiveNews />
     </div>
   )
 }
