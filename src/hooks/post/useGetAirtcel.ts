@@ -5,7 +5,7 @@ import axios from "axios"
 
 export const useGetAirtcle = () => {
     const posts = useQuery({
-        queryKey: ['posts'],
+        queryKey: ['article'],
         queryFn:async () =>
         {
             const res = await axios.get("/api/post/get-airtcle");

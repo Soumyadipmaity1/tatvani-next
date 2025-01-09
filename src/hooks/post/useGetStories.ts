@@ -5,7 +5,7 @@ import axios from "axios"
 
 export const useGetStories = () => {
     const posts = useQuery({
-        queryKey: ['posts'],
+        queryKey: ['stories'],
         queryFn:async () =>
         {
             const res = await axios.get("/api/post/get-stories");
