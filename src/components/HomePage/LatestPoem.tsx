@@ -45,7 +45,7 @@ const poems: PoemItem[] = [
 const FeaturedPoems: React.FC = () => {
 
   const { data, isLoading, isError } = useGetPoem();
-  console.log();
+
 
   return (
     <div className="sm:px-20 xl:px-10 2xl:px-20 px-4 py-20 bg-white dark:bg-[#111827] transition-colors duration-300">
@@ -58,7 +58,7 @@ const FeaturedPoems: React.FC = () => {
 
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {data && data.map((poem: any, index: number) => (
+          {data && data.slice(0,4).map((poem: any, index: number) => (
             <div
               key={index}
               className="relative rounded-xl shadow-lg overflow-hidden group transition-all duration-300 transform hover:scale-105 hover:shadow-xl bg-white dark:bg-darkBlue border border-pitch dark:border-[#111827]"

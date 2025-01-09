@@ -69,7 +69,7 @@ const ExclusiveStory: FC = () => {
             </div>
           </div>
 
-          {poems.map((poem, index) => (
+          {poems && poems.map((poem, index) => (
             <div
               key={index}
               className="flex flex-col p-6 bg-white dark:bg-darkBlue rounded-lg shadow-lg transition-transform transform hover:scale-100 duration-500 relative overflow-hidden cursor-pointer hover:shadow-lg group"

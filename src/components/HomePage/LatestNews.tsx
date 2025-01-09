@@ -48,7 +48,7 @@ const LatestArticle: React.FC = () => {
 
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {airtcle.data && airtcle.data.map((item: any, index: number) => (
+          {airtcle.data && airtcle.data.slice(0,4).map((item: any, index: number) => (
             <div
               key={index}
               className="bg-white dark:bg-darkBlue border border-pitch rounded-lg shadow-md overflow-hidden group relative transition-transform duration-300 transform hover:scale-105"

@@ -46,7 +46,7 @@ const FeaturedStories = () => {
 
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {poems && poems.map((poem: any, index: number) => (
+          {poems && poems.slice(0,4).map((poem: any, index: number) => (
             <div
               key={index}
               className="relative bg-white dark:bg-darkBlue rounded-xl shadow-lg overflow-hidden group transition-all duration-300 transform hover:scale-105 border border-pitch dark:border-[#111827]"
