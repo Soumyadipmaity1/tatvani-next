@@ -139,11 +139,11 @@ export const post = new Hono()
         }
     }).get("/get-stories", async (c) => {
         try {
-            const poets = await db.post.findMany({
+            const Stories = await db.post.findMany({
                 where: { category: "Stories" },
                 orderBy: { createdAt: "desc" }
             });
-            return c.json({ poets }, 200);
+            return c.json({ Stories }, 200);
         } catch (error) {
             throw new HTTPException(500, {
                 message: "Internal server error occurred"
