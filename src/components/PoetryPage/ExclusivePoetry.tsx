@@ -1,38 +1,28 @@
+"use client";
+import { useGetPoem } from '@/hooks/post/useGetPoet';
 import { FaFeather, FaCalendarAlt } from 'react-icons/fa';
+// import { useGetPoem } from '@/hooks/post/useGetPoem';
 
 interface Poem {
   title: string;
-  description: string;
+  content:string;
   poet: string;
   date: string;
-  image: string;
+  imageUrl: string;
 }
 
 const ExclusivePoetry: React.FC = () => {
-  const poems: Poem[] = [
-    {
-      title: "The Song of Nature",
-      description: "The breeze hums melodies unheard, whispering secrets of the earth...",
-      poet: "John Keats",
-      date: "12/08/2023",
-      image: 'https://img.freepik.com/premium-photo/concept-womans-health-self-care-fashion-beauty-healthy-lifestyle-ad_1294533-4811.jpg',
-    },
-    {
-      title: "A Stolen Dream",
-      description: "Beneath the moon's quiet gaze, a stolen dream returns to play...",
-      poet: "Emily Dickinson",
-      date: "21/09/2023",
-      image: 'https://img.freepik.com/premium-photo/concept-womans-health_self-care-fashion-beauty-healthy-lifestyle-ad_1294533-4811.jpg',
-    },
-  ];
+  const { data: poems, isLoading, isError } = useGetPoem();
 
-  const featuredPoem: Poem = {
-    title: "Whispers of the Soul",
-    description: "In the dance of life, the soul whispers songs only the heart can hear...",
-    poet: "William Wordsworth",
-    date: "25/09/2023",
-    image: 'https://img.freepik.com/premium-photo/concept-womans-health_self-care-fashion-beauty-healthy-lifestyle-ad_1294533-4811.jpg',
-  };
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError || !poems) {
+    return <div>Error fetching poems.</div>;
+  }
+
+  const featuredPoem: Poem = poems[0];
 
   return (
     <div className="bg-gray-50 dark:bg-bgDark py-16 px-5 sm:px-16" suppressHydrationWarning={true}> 
@@ -42,7 +32,7 @@ const ExclusivePoetry: React.FC = () => {
         <div className="grid lg:grid-cols-3 grid-rows-2 gap-5">
           <div className="lg:col-span-2 row-span-2 p-6 bg-darkBlue text-white rounded-lg overflow-hidden relative shadow-lg cursor-pointer transition-all duration-300 hover:shadow-xl group">
             <img
-              src={featuredPoem.image}
+              src={featuredPoem.imageUrl}
               alt={featuredPoem.title}
               className="absolute inset-0 w-full h-full object-cover opacity-30"
             />
@@ -52,7 +42,7 @@ const ExclusivePoetry: React.FC = () => {
               </h3>
               <p className="text-xl mb-4 italic">{featuredPoem.poet}</p>
               <p className="text-base mb-6">
-                {featuredPoem.description}
+                {featuredPoem.content.slice(0,200)}
               </p>
               <div className="flex items-center text-gray-300 gap-6">
                 <span className="flex items-center gap-2">
@@ -65,13 +55,13 @@ const ExclusivePoetry: React.FC = () => {
             </div>
           </div>
 
-          {poems.map((poem, index) => (
+          {poems.slice(1).map((poem:Poem, index:number) => (
             <div
               key={index}
               className="flex flex-col p-6 bg-white dark:bg-darkBlue rounded-lg shadow-lg transition-transform transform hover:scale-105 duration-500 relative overflow-hidden cursor-pointer hover:shadow-xl group"
             >
               <img
-                src={poem.image}
+                src={poem.imageUrl}
                 alt={poem.title}
                 className="absolute inset-0 w-full h-full object-cover opacity-20"
               />
@@ -79,7 +69,7 @@ const ExclusivePoetry: React.FC = () => {
                 <h3 className="text-2xl font-bold mb-2 text-darkBlue dark:text-pitch group-hover:text-pitch dark:group-hover:text-white transition-colors duration-300">
                   {poem.title}
                 </h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">{poem.description}</p>
+                <p className="text-gray-700 dark:text-gray-300 mb-4">{poem.content.slice(0,200)}</p>
                 <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
                   <span className="flex items-center gap-2">
                     <FaFeather className="text-darkBlue dark:text-pitch" /> {poem.poet}
