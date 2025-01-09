@@ -2,9 +2,11 @@
 import React from 'react';
 import Image from 'next/image';
 import { useGetAirtcle } from '@/hooks/post/useGetAirtcel';
+import Link from 'next/link';
 // import { useGetAirtcle } from '@/hooks/post/useGetAirtcle';
 
 interface NewsItem {
+  id: string;
   title: string;
   content: string;
   category: string;
@@ -12,18 +14,21 @@ interface NewsItem {
   imageUrl: string;
 }
 
-const NewsCard: React.FC<NewsItem> = ({ title, content, category, createdAt, imageUrl }) => (
-  <div className="flex flex-col md:flex-row items-center md:items-start gap-4 p-4 bg-white dark:bg-[#1f2937] shadow-md rounded-lg transition duration-300 hover:shadow-lg cursor-pointer group">
-    <Image src={imageUrl} alt={title} width={128} height={128} className="w-full md:w-32 h-32 rounded-lg object-cover" />
-    <div>
-      <h3 className="text-xl font-semibold mb-2 text-darkBlue dark:text-pitch group-hover:text-pitch dark:group-hover:text-white transition duration-300">{title}</h3>
-      <p className="text-darkBlue dark:text-white mb-2">{content.slice(0,200)}</p>
-      <div className="text-sm text-darkBlue dark:text-pitch flex items-center gap-4">
-        <span className='bg-darkBlue dark:bg-pitch p-0.5 px-1.5 rounded-md text-pitch dark:text-darkBlue font-normal'>{category}</span>
-        <span>{new Date(createdAt).toLocaleDateString()}</span>
+const NewsCard: React.FC<NewsItem> = ({ title, content, category, createdAt, imageUrl, id }) => (
+  <Link href={`/read/?id=${id}`}>
+    <div className="flex flex-col md:flex-row items-center md:items-start gap-4 p-4 bg-white dark:bg-[#1f2937] shadow-md rounded-lg transition duration-300 hover:shadow-lg cursor-pointer group">
+      <Image src={imageUrl} alt={title} width={128} height={128} className="w-full md:w-32 h-32 rounded-lg object-cover" />
+      <div>
+        <h3 className="text-xl font-semibold mb-2 text-darkBlue dark:text-pitch group-hover:text-pitch dark:group-hover:text-white transition duration-300">{title}</h3>
+        <p className="text-darkBlue dark:text-white mb-2">{content.slice(0, 200)}</p>
+        <div className="text-sm text-darkBlue dark:text-pitch flex items-center gap-4">
+          <span className='bg-darkBlue dark:bg-pitch p-0.5 px-1.5 rounded-md text-pitch dark:text-darkBlue font-normal'>{category}</span>
+          <span>{new Date(createdAt).toLocaleDateString()}</span>
+        </div>
       </div>
+      {/* <button>Read More</button> */}
     </div>
-  </div>
+  </Link>
 );
 
 const ExclusiveNews: React.FC = () => {
@@ -37,7 +42,7 @@ const ExclusiveNews: React.FC = () => {
     return <div>Error fetching news items.</div>;
   }
 
-  const featuredNews:NewsItem = newsItems[0];
+  const featuredNews: NewsItem = newsItems[0];
 
   return (
     <div className="bg-white dark:bg-bgDark py-12 transition-colors duration-300">

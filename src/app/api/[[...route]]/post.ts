@@ -79,8 +79,8 @@ export const post = new Hono()
         }
     }).get('/get-posts', async (c) => {
         try {
-            const posts = await db.post.findMany();
-            return c.json({ posts }, 200);
+            const post = await db.post.findMany();
+            return c.json({ post }, 200);
         } catch (error) {
             throw new HTTPException(500, { message: 'An error occurred' });
         }
